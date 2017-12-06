@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman Game</title>
+</head>
+<body>
+
+	<div>
+		<div id="game-word">
+		</div>
+		<div id="guesses-left">
+	</div>
+
+	<script type="text/javascript">
+
+		//initialize game
+			//set scoring variables
+			var guessesLeft = 15;
+			var allGuesses = [];
+
+			//pick a word from an array of words
+			var wordArray = ["drink", "burger", "sandwich"];
+			var wordSelection = Math.floor(Math.random() * wordArray.length);
+			console.log(wordSelection); // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+			var randomWord = wordArray[wordSelection];
+			console.log(randomWord);   // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+
+			//pick apart the word to see how many letters long it is and what letters are in it
+			var letterArray = randomWord.split("");
+			console.log(letterArray);   // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+
+			//push the necessary elements to html/css for styling
+			for (var j = 0; j < letterArray.length; j++) {
+				var wordDisplay = document.createElement("span");
+				wordDisplay.setAttribute("id", j);
+				document.getElementById("game-word").appendChild(wordDisplay);
+			}
+
+			var guessCountDisplay = document.getElementById("guesses-left")
+			var guessPrint = document.createTextNode(guessesLeft);
+			guessCountDisplay.appendChild(guessPrint);
+
+
+		//when a key is pressed, check if it is in the word
+			//if it is in the word, adjust score and the letters in the world appropriately, push for display
+			document.onkeyup = function(event) {
+				var userPress = event.key;
+				var checkFailGuesses = 0;
+				var checkIfGuessed = allGuesses.indexOf(userPress);
+				if (checkIfGuessed < 0 && guessesLeft !== 0) {  //checks to make sure letter hasn't been guessed and the game isn't over before proceeding
+					allGuesses.push(userPress); //adds guessed letter to array of all guesses if not already guessed
+
+					for (var i = 0; i < letterArray.length; i++) {
+						if (userPress === letterArray[i]) {
+							var findElement = document.getElementById(i);
+							var setText = document.createTextNode(userPress);
+							findElement.appendChild(setText);
+							checkFailGuesses++;
+						};
+					}
+			//if not, also adjust score and the letters appropriately, push for display
+					if (checkFailGuesses < 1) {
+						guessesLeft--;
+						document.getElementById("guesses-left").textContent=guessesLeft;
+					}
+
+					if (guessesLeft == 0) {
+						document.getElementById("guesses-left").textContent="Game Over (refresh to play again)";
+					}
+				}
+			}
+
+
+
+		//ending the game
+			// check if the game has been lost
+
+			//check if the games has been won
+
+			//allow for reset
+
+	</script>
+</body>
+</html>
