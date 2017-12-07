@@ -7,8 +7,11 @@
 <body>
 
 	<div>
+		<h1>Hangman: press any key to play!</h1>
+		<h5>Your word is:</h5>
 		<div id="game-word">
 		</div>
+		<h5>You have this many guesses left</h5>
 		<div id="guesses-left">
 	</div>
 
@@ -22,19 +25,21 @@
 			//pick a word from an array of words
 			var wordArray = ["drink", "burger", "sandwich"];
 			var wordSelection = Math.floor(Math.random() * wordArray.length);
-			console.log(wordSelection); // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+			console.log(wordSelection);
 			var randomWord = wordArray[wordSelection];
-			console.log(randomWord);   // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+			console.log(randomWord);
 
 			//pick apart the word to see how many letters long it is and what letters are in it
 			var letterArray = randomWord.split("");
-			console.log(letterArray);   // HERE IS A CONSOLE LOG, REMOVE WHEN FINISHED
+			console.log(letterArray);
 
 			//push the necessary elements to html/css for styling
 			for (var j = 0; j < letterArray.length; j++) {
 				var wordDisplay = document.createElement("span");
 				wordDisplay.setAttribute("id", j);
 				document.getElementById("game-word").appendChild(wordDisplay);
+				var underScore = document.createTextNode("_ ");
+				wordDisplay.appendChild(underScore);
 			}
 
 			var guessCountDisplay = document.getElementById("guesses-left")
@@ -54,8 +59,7 @@
 					for (var i = 0; i < letterArray.length; i++) {
 						if (userPress === letterArray[i]) {
 							var findElement = document.getElementById(i);
-							var setText = document.createTextNode(userPress);
-							findElement.appendChild(setText);
+							findElement.textContent=userPress;
 							checkFailGuesses++;
 						};
 					}
@@ -71,14 +75,6 @@
 				}
 			}
 
-
-
-		//ending the game
-			// check if the game has been lost
-
-			//check if the games has been won
-
-			//allow for reset
 
 	</script>
 </body>
